@@ -3,15 +3,15 @@ This project demonstrates NESTED LOOPS (i.e., loops within loops)
 in the context of TWO-DIMENSIONAL GRAPHICS.
 
 Authors: David Mutchler, Valerie Galluzzi, Mark Hays, Amanda Stouder,
-         their colleagues and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         their colleagues and Rachel Wood.
+"""  # DONE 1
 
 import rosegraphics as rg
 
 
 def main():
     """ Calls the other functions to demonstrate them. """
-    run_test_draw_L()
+    # run_test_draw_L()
     run_test_draw_wall_on_right()
 
 
@@ -80,9 +80,34 @@ def draw_L(window, circle, r, c):
     and m and n are small, positive integers.
     """
     # ------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # DONE 2
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
+    xval = circle.center.x
+    for k in range(r+3):
+        if k < r:
+            for l in range(3):
+                newcircle = rg.Circle(
+                    rg.Point(circle.center.x, circle.center.y),
+                    circle.radius)
+                newcircle.fill_color = circle.fill_color
+                newcircle.outline_color = circle.outline_color
+                newcircle.outline_thickness = circle.outline_thickness
+                newcircle.attach_to(window)
+                window.render(.1)
+                circle.center.x = circle.center.x + 2 * circle.radius
+        else:
+            for l in range(c+3):
+                newcircle = rg.Circle(rg.Point(circle.center.x, circle.center.y),
+                                      circle.radius)
+                newcircle.fill_color = circle.fill_color
+                newcircle.outline_color = circle.outline_color
+                newcircle.outline_thickness = circle.outline_thickness
+                newcircle.attach_to(window)
+                window.render(.1)
+                circle.center.x = circle.center.x + 2 * circle.radius
+        circle.center.x = xval
+        circle.center.y = circle.center.y + 2 * circle.radius
 
 
 def run_test_draw_wall_on_right():
@@ -121,9 +146,28 @@ def draw_wall_on_right(rectangle, n, window):
     and n is a small, positive integer.
     """
     # ------------------------------------------------------------------
-    # TODO: 3. Implement and test this function.
+    # DONE 3
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
+    for k in range(n+1):
+        for l in range(k):
+            ulc = rectangle.get_upper_left_corner()
+            lrc = rectangle.get_lower_right_corner()
+            length = ulc.x - lrc.x
+            hight = ulc.y - lrc.y
+            newulcx = lrc.x + length * (l+1)
+            newlrcx = lrc.x + length * (l)
+            newulcy = lrc.y - hight * (k-2)
+            newlrcy = lrc.y - hight * (k-1)
+            newrect = rg.Rectangle(rg.Point(newulcx, newulcy), rg.Point(
+                newlrcx, newlrcy))
+            newrect.attach_to(window)
+            window.render(.1)
+            print(newrect)
+
+
+
+
 
 
 # ----------------------------------------------------------------------
